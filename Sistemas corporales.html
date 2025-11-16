@@ -1,0 +1,671 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas Corporales</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .nav-btn {
+            background: white;
+            border: none;
+            padding: 20px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-btn.digestivo { color: #d4a574; }
+        .nav-btn.circulatorio { color: #e74c3c; }
+        .nav-btn.excretor { color: #f39c12; }
+        .nav-btn.respiratorio { color: #3498db; }
+        
+        .content {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .sistema {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .sistema.activo {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .sistema h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .seccion {
+            margin-bottom: 30px;
+        }
+        
+        .seccion h3 {
+            font-size: 1.4em;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .seccion p, .seccion li {
+            font-size: 1.05em;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
+        .seccion ul {
+            margin-left: 30px;
+        }
+        
+        .seccion li {
+            margin-bottom: 8px;
+        }
+        
+        .box-info {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .box-info.patologia {
+            border-left-color: #e74c3c;
+        }
+        
+        .box-info.funciones {
+            border-left-color: #27ae60;
+        }
+        
+        .box-info.nutricion {
+            border-left-color: #f39c12;
+        }
+        
+        .grid-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            .sistema {
+                padding: 20px;
+            }
+            
+            .sistema h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🫀 Sistemas Corporales</h1>
+        <p>Conoce los principales sistemas del cuerpo humano</p>
+    </header>
+    
+    <nav>
+        <button class="nav-btn digestivo" onclick="mostrarSistema('todos')" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-weight: bold;">📊 Ver Todos</button>
+        <button class="nav-btn digestivo" onclick="mostrarSistema('digestivo')">🍽️ Sistema Digestivo</button>
+        <button class="nav-btn circulatorio" onclick="mostrarSistema('circulatorio')">❤️ Sistema Circulatorio</button>
+        <button class="nav-btn excretor" onclick="mostrarSistema('excretor')">💧 Sistema Excretor</button>
+        <button class="nav-btn respiratorio" onclick="mostrarSistema('respiratorio')">💨 Sistema Respiratorio</button>
+    </nav>
+    
+    <div class="content">
+        <!-- SISTEMA DIGESTIVO -->
+        <div id="digestivo" class="sistema">
+            <h2>🍽️ Sistema Digestivo</h2>
+            
+            <div class="seccion">
+                <h3>📝 Descripción General</h3>
+                <p>El sistema digestivo es responsable de descomponer los alimentos en nutrientes que el cuerpo puede absorber y utilizar para obtener energía, crecer y reparar células.</p>
+            </div>
+            
+            <div class="seccion">
+                <h3>🥗 Nutrición</h3>
+                <div class="box-info nutricion">
+                    <p><strong>Procesa:</strong> Proteínas, carbohidratos, grasas, vitaminas, minerales y fibra.</p>
+                    <p><strong>Objetivo:</strong> Convertir los macronutrientes en moléculas pequeñas que pueden ser absorbidas por el intestino delgado.</p>
+                </div>
+            </div>
+            
+            <div class="seccion">
+                <h3>⚙️ Funciones Principales</h3>
+                <ul>
+                    <li><strong>Ingestión:</strong> Entrada de alimentos por la boca</li>
+                    <li><strong>Digestión mecánica:</strong> Masticación y movimientos musculares</li>
+                    <li><strong>Digestión química:</strong> Enzimas descomponen moléculas grandes</li>
+                    <li><strong>Propulsión:</strong> Movimiento de alimentos a través del tracto digestivo</li>
+                    <li><strong>Absorción:</strong> Nutrientes pasan al torrente sanguíneo</li>
+                    <li><strong>Defecación:</strong> Eliminación de desechos</li>
+                </ul>
+            </div>
+            
+            <div class="seccion">
+                <h3>🔧 Órganos Principales</h3>
+                <div class="grid-info">
+                    <div class="card">
+                        <h4>Boca</h4>
+                        <p>Inicia la digestión mediante la masticación y la saliva</p>
+                    </div>
+                    <div class="card">
+                        <h4>Esófago</h4>
+                        <p>Tubo que transporta alimentos al estómago</p>
+                    </div>
+                    <div class="card">
+                        <h4>Estómago</h4>
+                        <p>Mezcla alimentos con ácido y enzimas</p>
+                    </div>
+                    <div class="card">
+                        <h4>Intestino Delgado</h4>
+                        <p>Absorbe la mayoría de nutrientes</p>
+                    </div>
+                    <div class="card">
+                        <h4>Intestino Grueso</h4>
+                        <p>Absorbe agua y forma heces</p>
+                    </div>
+                    <div class="card">
+                        <h4>Recto y Ano</h4>
+                        <p>Eliminación de desechos</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="seccion">
+                <h3>🆘 Órganos Accesorios</h3>
+                <ul>
+                    <li><strong>Glándulas salivales:</strong> Producen saliva</li>
+                    <li><strong>Hígado:</strong> Produce bilis para digerir grasas</li>
+                    <li><strong>Páncreas:</strong> Produce enzimas digestivas</li>
+                    <li><strong>Vesícula biliar:</strong> Almacena bilis</li>
+                </ul>
+            </div>
+            
+            <div class="seccion">
+                <h3>🦠 Patologías Comunes</h3>
+                <div class="box-info patologia">
+                    <p><strong>Gastritis:</strong> Inflamación del revestimiento del estómago</p>
+                    <p><strong>Úlceras:</strong> Llagas en el esófago, estómago o intestino delgado</p>
+                    <p><strong>Síndrome del intestino irritable (SII):</strong> Dolor abdominal y cambios en hábitos intestinales</p>
+                    <p><strong>Enfermedad inflamatoria intestinal:</strong> Crohn y colitis ulcerosa</p>
+                    <p><strong>Intolerancia a la lactosa:</strong> Dificultad para digerir lactosa</p>
+                    <p><strong>Estreñimiento y diarrea:</strong> Alteraciones del tránsito intestinal</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SISTEMA CIRCULATORIO -->
+        <div id="circulatorio" class="sistema">
+            <h2>❤️ Sistema Circulatorio</h2>
+            
+            <div class="seccion">
+                <h3>📝 Descripción General</h3>
+                <p>El sistema circulatorio transporta sangre, oxígeno y nutrientes a todas las células del cuerpo, y recoge desechos para su eliminación.</p>
+            </div>
+            
+            <div class="seccion">
+                <h3>🥗 Nutrición</h3>
+                <div class="box-info nutricion">
+                    <p><strong>Transporta:</strong> Oxígeno, glucosa, aminoácidos, lípidos y vitaminas.</p>
+                    <p><strong>Objetivo:</strong> Distribuir nutrientes absorbidos desde el sistema digestivo a todas las células corporales.</p>
+                </div>
+            </div>
+            
+            <div class="seccion">
+                <h3>⚙️ Funciones Principales</h3>
+                <ul>
+                    <li><strong>Transporte:</strong> De oxígeno, nutrientes y hormonas</li>
+                    <li><strong>Regulación térmica:</strong> Distribuye calor</li>
+                    <li><strong>Defensa:</strong> Transporta células inmunológicas</li>
+                    <li><strong>Equilibrio hídrico:</strong> Mantiene el balance de fluidos</li>
+                    <li><strong>Recogida de desechos:</strong> Recoge CO2 y productos de desecho</li>
+                </ul>
+            </div>
+            
+            <div class="seccion">
+                <h3>🔧 Órganos Principales</h3>
+                <div class="grid-info">
+                    <div class="card">
+                        <h4>Corazón</h4>
+                        <p>Bombea sangre a todo el cuerpo</p>
+                    </div>
+                    <div class="card">
+                        <h4>Arterias</h4>
+                        <p>Transportan sangre oxigenada</p>
+                    </div>
+                    <div class="card">
+                        <h4>Venas</h4>
+                        <p>Transportan sangre desoxigenada</p>
+                    </div>
+                    <div class="card">
+                        <h4>Capilares</h4>
+                        <p>Permiten intercambio de nutrientes</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="seccion">
+                <h3>🆘 Órganos Accesorios</h3>
+                <ul>
+                    <li><strong>Pulmones:</strong> Oxigenan la sangre</li>
+                    <li><strong>Hígado:</strong> Filtra la sangre</li>
+                    <li><strong>Riñones:</strong> Filtran desechos de la sangre</li>
+                </ul>
+            </div>
+            
+            <div class="seccion">
+                <h3>🦠 Patologías Comunes</h3>
+                <div class="box-info patologia">
+                    <p><strong>Hipertensión arterial:</strong> Presión arterial elevada</p>
+                    <p><strong>Infarto de miocardio:</strong> Muerte de tejido cardíaco por falta de riego</p>
+                    <p><strong>Accidente cerebrovascular:</strong> Obstrucción o ruptura de vasos cerebrales</p>
+                    <p><strong>Insuficiencia cardíaca:</strong> Corazón débil que no bombea eficientemente</p>
+                    <p><strong>Arritmias:</strong> Latidos cardíacos irregulares</p>
+                    <p><strong>Aterosclerosis:</strong> Acumulación de placa en arterias</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SISTEMA EXCRETOR -->
+        <div id="excretor" class="sistema">
+            <h2>💧 Sistema Excretor</h2>
+            
+            <div class="seccion">
+                <h3>📝 Descripción General</h3>
+                <p>El sistema excretor elimina los desechos del metabolismo corporal para mantener el equilibrio químico interno del cuerpo.</p>
+            </div>
+            
+            <div class="seccion">
+                <h3>🥗 Nutrición</h3>
+                <div class="box-info nutricion">
+                    <p><strong>Elimina:</strong> Urea, ácido úrico, creatinina y otros desechos nitrogenados.</p>
+                    <p><strong>Objetivo:</strong> Mantener el equilibrio de agua, electrolitos e iones en el cuerpo.</p>
+                </div>
+            </div>
+            
+            <div class="seccion">
+                <h3>⚙️ Funciones Principales</h3>
+                <ul>
+                    <li><strong>Filtración:</strong> Separar desechos de sustancias útiles</li>
+                    <li><strong>Reabsorción:</strong> Recuperar agua y nutrientes esenciales</li>
+                    <li><strong>Formación de orina:</strong> Concentrar desechos</li>
+                    <li><strong>Regulación electrolítica:</strong> Mantener el balance de iones</li>
+                    <li><strong>Regulación de presión arterial:</strong> Control de volumen de fluidos</li>
+                </ul>
+            </div>
+            
+            <div class="seccion">
+                <h3>🔧 Órganos Principales</h3>
+                <div class="grid-info">
+                    <div class="card">
+                        <h4>Riñones</h4>
+                        <p>Filtran la sangre y producen orina</p>
+                    </div>
+                    <div class="card">
+                        <h4>Uréteres</h4>
+                        <p>Transportan orina a la vejiga</p>
+                    </div>
+                    <div class="card">
+                        <h4>Vejiga urinaria</h4>
+                        <p>Almacena la orina</p>
+                    </div>
+                    <div class="card">
+                        <h4>Uretra</h4>
+                        <p>Expulsa la orina del cuerpo</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="seccion">
+                <h3>🆘 Órganos Accesorios</h3>
+                <ul>
+                    <li><strong>Hígado:</strong> Procesa desechos antes de ser excretados</li>
+                    <li><strong>Piel:</strong> Elimina agua y sales mediante el sudor</li>
+                    <li><strong>Pulmones:</strong> Eliminan dióxido de carbono</li>
+                </ul>
+            </div>
+            
+            <div class="seccion">
+                <h3>🦠 Patologías Comunes</h3>
+                <div class="box-info patologia">
+                    <p><strong>Insuficiencia renal:</strong> Riñones no filtran adecuadamente</p>
+                    <p><strong>Cálculos renales:</strong> Formación de depósitos minerales duros</p>
+                    <p><strong>Infección urinaria:</strong> Infección bacteriana del tracto urinario</p>
+                    <p><strong>Cistitis:</strong> Inflamación de la vejiga</p>
+                    <p><strong>Glomerulonefritis:</strong> Inflamación de los riñones</p>
+                    <p><strong>Incontinencia urinaria:</strong> Pérdida involuntaria de orina</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SISTEMA RESPIRATORIO -->
+        <div id="respiratorio" class="sistema">
+            <h2>💨 Sistema Respiratorio</h2>
+            
+            <div class="seccion">
+                <h3>📝 Descripción General</h3>
+                <p>El sistema respiratorio permite el intercambio de gases entre el cuerpo y el ambiente, proporcionando oxígeno a la sangre y eliminando dióxido de carbono.</p>
+            </div>
+            
+            <div class="seccion">
+                <h3>🥗 Nutrición</h3>
+                <div class="box-info nutricion">
+                    <p><strong>Incorpora:</strong> Oxígeno del aire para todas las células.</p>
+                    <p><strong>Objetivo:</strong> Garantizar el suministro continuo de oxígeno para la respiración celular y la producción de energía (ATP).</p>
+                </div>
+            </div>
+            
+            <div class="seccion">
+                <h3>⚙️ Funciones Principales</h3>
+                <ul>
+                    <li><strong>Intercambio gaseoso:</strong> Ingresa O2, egresa CO2</li>
+                    <li><strong>Regulación del pH:</strong> Controla la acidez mediante eliminación de CO2</li>
+                    <li><strong>Defensa:</strong> Filtra partículas y patógenos</li>
+                    <li><strong>Regulación de presión:</strong> En la cavidad torácica</li>
+                    <li><strong>Fonación:</strong> Producción de sonidos mediante las cuerdas vocales</li>
+                </ul>
+            </div>
+            
+            <div class="seccion">
+                <h3>🔧 Órganos Principales</h3>
+                <div class="grid-info">
+                    <div class="card">
+                        <h4>Nariz</h4>
+                        <p>Filtra y calienta el aire</p>
+                    </div>
+                    <div class="card">
+                        <h4>Faringe</h4>
+                        <p>Conducto compartido con tracto digestivo</p>
+                    </div>
+                    <div class="card">
+                        <h4>Laringe</h4>
+                        <p>Contiene cuerdas vocales</p>
+                    </div>
+                    <div class="card">
+                        <h4>Tráquea</h4>
+                        <p>Tubo que lleva aire a los pulmones</p>
+                    </div>
+                    <div class="card">
+                        <h4>Bronquios</h4>
+                        <p>Dividen la tráquea en los pulmones</p>
+                    </div>
+                    <div class="card">
+                        <h4>Alvéolos</h4>
+                        <p>Intercambio gaseoso con la sangre</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="seccion">
+                <h3>🆘 Órganos Accesorios</h3>
+                <ul>
+                    <li><strong>Diafragma:</strong> Músculo principal de la respiración</li>
+                    <li><strong>Músculos intercostales:</strong> Ayudan en la respiración</li>
+                    <li><strong>Pulmones:</strong> Órganos principales del intercambio gaseoso</li>
+                </ul>
+            </div>
+            
+            <div class="seccion">
+                <h3>🦠 Patologías Comunes</h3>
+                <div class="box-info patologia">
+                    <p><strong>Asma:</strong> Inflamación de las vías aéreas</p>
+                    <p><strong>Enfermedad pulmonar obstructiva crónica (EPOC):</strong> Limitación del flujo de aire</p>
+                    <p><strong>Neumonía:</strong> Infección de los pulmones</p>
+                    <p><strong>Tuberculosis:</strong> Infección bacteriana grave</p>
+                    <p><strong>Apnea del sueño:</strong> Pausas en la respiración durante el sueño</p>
+                    <p><strong>Bronquitis:</strong> Inflamación de los bronquios</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- RESUMEN COMPARATIVO -->
+        <div id="todos" class="sistema activo">
+            <h2>📊 Comparativa de Todos los Sistemas</h2>
+            
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                    <thead style="background: #667eea; color: white;">
+                        <tr>
+                            <th style="padding: 15px; text-align: left; border: 1px solid #ddd;">Sistema</th>
+                            <th style="padding: 15px; text-align: left; border: 1px solid #ddd;">Nutrición</th>
+                            <th style="padding: 15px; text-align: left; border: 1px solid #ddd;">Funciones Clave</th>
+                            <th style="padding: 15px; text-align: left; border: 1px solid #ddd;">Órgano Principal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 15px; border: 1px solid #ddd;"><strong>🍽️ Digestivo</strong></td>
+                            <td style="padding: 15px; border: 1px solid #ddd;">Procesa proteínas, carbohidratos, grasas, vitaminas, minerales</td>
+                            <td style="padding: 15px; border: 1px solid #ddd;">Descomposición, absorción, propulsión</td>
+                            <td style="padding: 15px; border: 1px solid #ddd;">Estómago, Intestino Delgado</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border: 1px solid #ddd;"><strong>❤️ Circulatorio</strong></td>
+                            <td style="padding: 15px; border: 1px solid #ddd;">Transporta oxígeno, glucosa, aminoácidos, lípidos, vitaminas</td>
+                            <td style="padding: 15px; border: 1px solid #ddd;">Transporte, regulación térmica, defensa</td>
+                            <td style="padding: 15px; border: 1px solid #ddd;">Corazón</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 15px; border: 1px solid #ddd;"><strong>💧 Excretor</strong></td>
+                            <td style="padding: 15px; border: 1px solid #ddd;">Elimina urea, ácido úrico, creatinina, desechos nitrogenados</td>
+                            <td style="padding: 15px; border: 1px solid #ddd;">Filtración, reabsorción, regulación electrolítica</td>
+                            <td style="padding: 15px; border: 1px solid #ddd;">Riñones</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border: 1px solid #ddd;"><strong>💨 Respiratorio</strong></td>
+                            <td style="padding: 15px; border: 1px solid #ddd;">Incorpora oxígeno, elimina dióxido de carbono</td>
+                            <td style="padding: 15px; border: 1px solid #ddd;">Intercambio gaseoso, regulación pH, defensa</td>
+                            <td style="padding: 15px; border: 1px solid #ddd;">Pulmones</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="seccion">
+                <h3>🔗 Interconexión de los Sistemas</h3>
+                <div class="box-info">
+                    <p><strong>Sistema Digestivo → Sistema Circulatorio:</strong> El digestivo descompone los alimentos y el circulatorio transporta los nutrientes absorbidos por todo el cuerpo.</p>
+                    <p><strong>Sistema Circulatorio → Sistema Respiratorio:</strong> El circulatorio recibe oxígeno de los pulmones y lo distribuye a todas las células.</p>
+                    <p><strong>Sistema Respiratorio → Sistema Circulatorio:</strong> Los pulmones intercambian gases que el corazón transporta.</p>
+                    <p><strong>Sistema Circulatorio → Sistema Excretor:</strong> El circulatorio lleva los desechos del metabolismo a los riñones para su eliminación.</p>
+                    <p><strong>Sistema Excretor → Sistema Circulatorio:</strong> Los riñones filtran la sangre y regulan el volumen de fluidos corporales.</p>
+                </div>
+            </div>
+            
+            <div class="seccion">
+                <h3>📋 Resumen de Partes y Órganos Principales</h3>
+                <div class="grid-info" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <div class="card" style="border-left-color: #d4a574;">
+                        <h4>🍽️ Sistema Digestivo</h4>
+                        <ul style="margin-left: 15px; font-size: 0.95em;">
+                            <li>Boca</li>
+                            <li>Esófago</li>
+                            <li>Estómago</li>
+                            <li>Intestino Delgado</li>
+                            <li>Intestino Grueso</li>
+                            <li>Hígado</li>
+                            <li>Páncreas</li>
+                            <li>Vesícula Biliar</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-left-color: #e74c3c;">
+                        <h4>❤️ Sistema Circulatorio</h4>
+                        <ul style="margin-left: 15px; font-size: 0.95em;">
+                            <li>Corazón</li>
+                            <li>Arterias</li>
+                            <li>Venas</li>
+                            <li>Capilares</li>
+                            <li>Sangre</li>
+                            <li>Aurícula Derecha</li>
+                            <li>Aurícula Izquierda</li>
+                            <li>Ventrículo Derecho</li>
+                            <li>Ventrículo Izquierdo</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-left-color: #f39c12;">
+                        <h4>💧 Sistema Excretor</h4>
+                        <ul style="margin-left: 15px; font-size: 0.95em;">
+                            <li>Riñones</li>
+                            <li>Uréteres</li>
+                            <li>Vejiga Urinaria</li>
+                            <li>Uretra</li>
+                            <li>Nefronas</li>
+                            <li>Glomérulo</li>
+                            <li>Túbulo Contorneado</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-left-color: #3498db;">
+                        <h4>💨 Sistema Respiratorio</h4>
+                        <ul style="margin-left: 15px; font-size: 0.95em;">
+                            <li>Nariz</li>
+                            <li>Faringe</li>
+                            <li>Laringe</li>
+                            <li>Tráquea</li>
+                            <li>Bronquios</li>
+                            <li>Bronquíolos</li>
+                            <li>Alvéolos</li>
+                            <li>Pulmones</li>
+                            <li>Diafragma</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="seccion">
+                <h3>⚡ Procesos Vitales Coordinados</h3>
+                <div class="box-info">
+                    <p><strong>1. Ingesta:</strong> El sistema digestivo recibe alimentos que serán procesados.</p>
+                    <p><strong>2. Digestión:</strong> Se descomponen en nutrientes simples mediante procesos mecánicos y químicos.</p>
+                    <p><strong>3. Absorción:</strong> Los nutrientes pasan al torrente sanguíneo circulatorio.</p>
+                    <p><strong>4. Transporte:</strong> El sistema circulatorio distribuye oxígeno y nutrientes a todas las células.</p>
+                    <p><strong>5. Respiración Celular:</strong> Las células usan oxígeno y glucosa para producir energía (ATP).</p>
+                    <p><strong>6. Metabolismo:</strong> Se generan desechos como CO2 y urea.</p>
+                    <p><strong>7. Eliminación:</strong> El sistema respiratorio expulsa CO2 y el excretor elimina otros desechos.</p>
+                    <p><strong>8. Homeostasis:</strong> Los sistemas mantienen el equilibrio interno del cuerpo.</p>
+                </div>
+            </div>
+            
+            <div class="seccion">
+                <h3>🩺 Problemas de Salud Multisistémicos</h3>
+                <div class="box-info patologia">
+                    <p><strong>Diabetes:</strong> Afecta digestión (absorción de glucosa), circulación (daño vascular), excreción (riñones), respiración (complicaciones pulmonares)</p>
+                    <p><strong>Obesidad:</strong> Impacta todos los sistemas, causando problemas digestivos, circulatorios, respiratorios y metabólicos</p>
+                    <p><strong>Sepsis:</strong> Infección que afecta circulación, respiración y función renal</p>
+                    <p><strong>Insuficiencia hepática:</strong> Afecta digestión, circulación y excreción</p>
+                    <p><strong>Insuficiencia cardiorrespiratoria:</strong> Compromete simultáneamente la circulación y respiración</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>📚 Sitio educativo sobre sistemas corporales | Aprender sobre salud es importante</p>
+    </footer>
+    
+    <script>
+        function mostrarSistema(sistema) {
+            // Ocultar todos los sistemas
+            const sistemas = document.querySelectorAll('.sistema');
+            sistemas.forEach(s => s.classList.remove('activo'));
+            
+            // Mostrar el sistema seleccionado
+            document.getElementById(sistema).classList.add('activo');
+            
+            // Scroll al contenido
+            document.querySelector('.content').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
